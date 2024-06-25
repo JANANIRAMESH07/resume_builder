@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        /* Add your CSS styling here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+       
+
+        /* Style for the input section */
+        #box8 {
+            margin-left: 4%;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 50%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="text"] {
+            width: 50%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+        button{
+            margin-left: 4%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="personalinfo.html">Personal Information</a>
+        <a href="professioninfo.html">Profession Summary</a>
+        <a href="work.html">Work Experience</a>
+        <a href="edu.html">Education</a>
+        <a href="interest.html">Area of Interest</a>
+        <a href="skill.html">Skills</a>
+        <a href="extra.html">Co-curricular Activities</a>
+        <a href="pro.html">Projects</a>
+        <a class="active" href="lan.html">Languages Known</a>
+        <a href="achieve.html">Achievements</a>
+      
+        <a href="declare.html">Declaration</a>
+    </div>
+    <div class="content">
+        <form class="section">
+            <div id="box8">
+                <h2>Languages Known:</h2>
+                <label for="numLanguages">How many languages do you know?</label>
+                <input type="number" id="numLanguages" min="1" placeholder="Enter a number">
+                <div id="languageInputs"></div>
+            </div>
+        </form>
+        <br>
+        <br>
+        <button class="next-btn" id="saveButton">Save</button>
+        <a href="template.html">  
+            <button  class="next-bt">Preview</button>  
+          </a>
+        <a href="achieve.html">  
+            <button  class="next-b">Next<i class="fa-solid fa-arrow-right"></i></button>  
+          </a>
+    </div>
+    <script>
+        const numLanguagesInput = document.getElementById('numLanguages');
+        const languageInputsContainer = document.getElementById('languageInputs');
+        const saveButton = document.getElementById('saveButton');
+
+        numLanguagesInput.addEventListener('input', function() {
+            const numLanguages = parseInt(this.value, 10);
+            createLanguageInputs(numLanguages);
+        });
+
+        saveButton.addEventListener('click', function() {
+            storeLanguageData();
+            redirectToNextPage();
+        });
+
+        function createLanguageInputs(numLanguages) {
+            languageInputsContainer.innerHTML = '';
+
+            for (let i = 0; i < numLanguages; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = `language${i}`;
+                input.placeholder = `Enter Language ${i + 1}`;
+                languageInputsContainer.appendChild(input);
+                languageInputsContainer.appendChild(document.createElement('br'));
+            }
+        }
+
+        function redirectToNextPage() {
+            storeLanguageData();
+
+           
+        }
+        function storeLanguageData() {
+        const languageData = [];
+
+        const inputs = languageInputsContainer.querySelectorAll('input[type="text"]');
+        inputs.forEach(input => {
+            if (input.value.trim() !== "") {
+                languageData.push(input.value);
+            }
+        });
+        
+
+            localStorage.setItem('languageData', JSON.stringify(languageData));
+        }
+
+        function loadStoredData() {
+            const storedLanguageData = JSON.parse(localStorage.getItem('languageData'));
+            if (storedLanguageData) {
+                numLanguagesInput.value = storedLanguageData.length;
+                createLanguageInputs(storedLanguageData.length);
+
+                const inputs = languageInputsContainer.querySelectorAll('input[type="text"]');
+                inputs.forEach((input, index) => {
+                    input.value = storedLanguageData[index];
+                });
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            loadStoredData();
+        });
+    </script>
+</body>
+
+</html>

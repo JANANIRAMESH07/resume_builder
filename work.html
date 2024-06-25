@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <style>
+body {
+      font-family: Arial, sans-serif;
+    
+      margin: 0;
+      padding: 0;
+    }
+
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .radio {
+      display: flex;
+      gap: 20px;
+    }
+
+    .radio label {
+      display: flex;
+      align-items: center;
+    }
+
+    input[type="number"] {
+      width: 50%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+
+    textarea {
+      width: 50%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 18px;
+      resize: vertical;
+      min-height: 150px;
+    }
+
+   .aa  {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.aa:hover {
+  background-color: #929ba5;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="personalinfo.html">Personal Information</a>
+        <a href="professioninfo.html">Profession Summary</a>
+        <a class="active" href="work.html">Work Experience</a>
+        <a href="edu.html">Education</a>
+        <a href="interest.html">Area of Interest</a>
+        <a href="skill.html">Skills</a>
+        <a href="extra.html">Co-curricular Activities</a>
+        <a href="pro.html">Projects</a>
+        <a href="lan.html">Languages Known</a>
+        <a href="achieve.html">Achievements</a>
+     
+        <a href="declare.html">Declaration</a>
+    </div>
+    <div class="content">
+        <form class="section">
+            <div id="box8">
+                <h2>Work Experience:</h2>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="option" value="option2" onclick="showInputFields()">
+                        Have Experience
+                    </label>
+                    <label>
+                        <input type="radio" name="option" value="option3" onclick="hideInputFields()">
+                        Have No Experience
+                    </label>
+                </div>
+                <br><br>
+                <div id="numberInput">
+                    <label for="numExperiences">Number of Experiences:</label><br>
+                    <input type="number" id="numExperiences" min="0" max="10">
+                </div>
+                <br><br>
+                <div id="experienceInputs"></div>
+            </div>
+        </form>
+        <br>
+        <button class="next-btn" id="box8" onclick="saveInfo()">Save</button>
+        <a href="template.html">  
+            <button  class="next-bt">Preview</button>  
+          </a>
+        <a href="edu.html">  
+            <button  class="next-b">Next<i class="fa-solid fa-arrow-right"></i></button>  
+          </a>
+       
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', loadSavedData);
+    
+        const numExperiencesInput = document.getElementById('numExperiences');
+        const experienceInputsContainer = document.getElementById('experienceInputs');
+        const radioHaveExperience = document.querySelector('input[value="option2"]');
+        const radioNoExperience = document.querySelector('input[value="option3"]');
+    
+        function showInputFields() {
+            document.getElementById('numberInput').style.display = 'block';
+            createExperienceInputs(numExperiencesInput.value);
+        }
+    
+        function hideInputFields() {
+            document.getElementById('numberInput').style.display = 'none';
+            experienceInputsContainer.innerHTML = '';
+        }
+    
+        numExperiencesInput.addEventListener('input', function () {
+            const numExperiences = parseInt(this.value, 10);
+            createExperienceInputs(numExperiences);
+        });
+    
+        function createExperienceInputs(numExperiences) {
+            experienceInputsContainer.innerHTML = '';
+    
+            for (let i = 0; i < numExperiences; i++) {
+                const textarea = document.createElement('textarea');
+                textarea.placeholder = `Enter Work Experience ${i + 1}`;
+                textarea.id = `experience-${i + 1}`;
+                experienceInputsContainer.appendChild(textarea);
+            }
+        }
+    
+        function saveInfo() {
+            
+            const numExperiences = parseInt(numExperiencesInput.value, 10);
+            localStorage.setItem('numExperiences', numExperiences);
+            const hasWorkExperience = numExperiences > 0;
+  localStorage.setItem('hasWorkExperience', hasWorkExperience);
+    
+            for (let i = 0; i < numExperiences; i++) {
+                const experienceValue = document.getElementById(`experience-${i + 1}`).value;
+                localStorage.setItem(`experience-${i + 1}`, experienceValue);
+            }
+    
+            const selectedRadio = document.querySelector('input[name="option"]:checked');
+            if (selectedRadio && selectedRadio.value === 'option3') {
+                localStorage.setItem('selectedRadio', 'option3');
+            } else {
+                localStorage.setItem('selectedRadio', 'option2');
+            }
+    
+           
+        }
+    
+        function loadSavedData() {
+            const savedNumExperiences = parseInt(localStorage.getItem('numExperiences'), 10);
+    
+            if (!isNaN(savedNumExperiences)) {
+                numExperiencesInput.value = savedNumExperiences;
+    
+                if (localStorage.getItem('selectedRadio') === 'option2') {
+                    showInputFields();
+                    radioHaveExperience.checked = true;
+                } else {
+                    hideInputFields();
+                    radioNoExperience.checked = true;
+                }
+    
+                for (let i = 0; i < savedNumExperiences; i++) {
+                    const savedExperience = localStorage.getItem(`experience-${i + 1}`);
+                    document.getElementById(`experience-${i + 1}`).value = savedExperience || '';
+                }
+            }
+        }
+    
+        radioHaveExperience.addEventListener('click', () => {
+            localStorage.setItem('selectedRadio', 'option2');
+            showInputFields();
+        });
+    
+        radioNoExperience.addEventListener('click', () => {
+            localStorage.setItem('selectedRadio', 'option3');
+            hideInputFields();
+        });
+    </script>
+    
+  
+</body>
+
+</html>

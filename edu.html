@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        #box6 {
+            margin-left: 4%;
+        }
+
+        .box {
+            height: 150px;
+        }
+
+        #extracurricularTextboxContainer {
+            margin-top: 10px;
+        }
+
+        .box {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 150px;
+            border-radius: 4px;
+        }
+        .next {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 20px;
+    margin-left: 50%;
+      transition: background-color 0.3s;
+    }
+
+ 
+
+    .next:hover {
+      background-color: #0056b3;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="personalinfo.html">Personal Information</a>
+        <a href="professioninfo.html">Profession Summary</a>
+        <a href="work.html">Work Experience</a>
+        <a class="active" href="edu.html">Education</a>
+        <a href="interest.html">Area of Interest</a>
+        <a href="skill.html">Skills</a>
+        <a href="extra.html">Co-curricular Activities</a>
+        <a href="pro.html">Projects</a>
+        <a href="lan.html">Languages Known</a>
+        <a href="achieve.html">Achievements</a>
+       
+        <a href="declare.html">Declaration</a>
+    </div>
+    <div class="content">
+        <form class="section" id="eduform">
+            <div id="box6">
+                <h2>Education:</h2>
+                <p>Provide the education details to be displayed in your resume:</p>
+                <textarea class="box" id="educationDetails" placeholder="Include Organization Name, Percentage Secured, Year of Graduation, Course Name"></textarea><br>
+
+                <br>
+                <button class="next-btn" type="submit">Save</button>
+
+            </div>
+        </form>
+        <a href="template.html">  
+            <button  class="next">Preview</button>  
+          </a>
+          <a href="interest.html">  
+            <button  class="next-b">Next<i class="fa-solid fa-arrow-right"></i></button>  
+          </a>
+    </div>
+   <!-- edu.html -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const eduForm = document.getElementById("eduform");
+        const educationDetailsTextarea = document.getElementById("educationDetails");
+
+        // Check if there's stored education details in local storage
+        const storedEducationDetails = localStorage.getItem("educationDetails");
+
+        // If there are stored details, populate the textarea with them
+        if (storedEducationDetails) {
+            educationDetailsTextarea.value = storedEducationDetails;
+            // Trigger an event to update the template when there's stored education data
+            const event = new Event("input");
+            educationDetailsTextarea.dispatchEvent(event);
+        }
+
+        eduForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const educationDetails = educationDetailsTextarea.value;
+
+            localStorage.setItem("educationDetails", educationDetails);
+
+           
+        });
+    });
+</script>
+
+</body>
+
+</html>

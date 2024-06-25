@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        #box6 {
+            margin-left: 4%;
+        }
+
+        .box {
+            height: 150px;
+        }
+
+        #extracurricularTextboxContainer {
+            margin-top: 10px;
+        }
+
+        .box {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 150px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="personalinfo.html">Personal Information</a>
+        <a href="professioninfo.html">Profession Summary</a>
+        <a href="work.html">Work Experience</a>
+        <a href="edu.html">Education</a>
+        <a href="interest.html">Area of Interest</a>
+        <a href="skill.html">Skills</a>
+        <a href="extra.html">Co-curricular Activities</a>
+        <a href="pro.html">Projects</a>
+        <a href="lan.html">Languages Known</a>
+        <a href="achieve.html">Achievements</a>
+       
+        <a class="active" href="declare.html">Declaration</a>
+    </div>
+    <div class="content">
+        <form class="section">
+            <div id="box11">
+                <h2>Declaration:</h2>
+                <label>Date:</label>
+                <input type="date" id="declarationDate"><br>
+                <label>Place:</label>
+                <input type="text" id="declarationPlace" placeholder="enter place"><br>
+                <label>Name:</label>
+                <input type="text" id="declarationUserName" placeholder="re-enter your name">
+                <p>I hereby declare that the previously given information is true and correct to the best of my knowledge.</p>
+
+                <input type="radio" name="declaration" id="yesRadio" onclick="toggleButtonVisibility(true)"> Yes
+                <input type="radio" name="declaration" id="noRadio" onclick="toggleButtonVisibility(false)"> No
+               
+            </div>
+        </form>
+        <button class="next-btn" type="button" onclick="saveDataToLocalStorage()" id="generateButton" style="display: none;">Generate Resume</button>
+    </div>
+    <script>
+        function saveDataToLocalStorage() {
+            const declarationDate = document.getElementById('declarationDate').value;
+        const declarationPlace = document.getElementById('declarationPlace').value;
+        const declarationName = document.getElementById('declarationUserName').value;
+        const declarationYesRadio = document.getElementById('yesRadio').checked;
+
+        // Create an object to store the data
+        const userData = {
+            date: declarationDate,
+            place: declarationPlace,
+            name: declarationName,
+            declaration: declarationYesRadio ? 'Yes' : 'No'
+        };
+
+        // Store the data in local storage
+        localStorage.setItem('userData', JSON.stringify(userData));
+
+        // Redirect to the next page
+        redirectToNextPage();
+    }
+         
+        
+
+    
+        function toggleButtonVisibility(showButton) {
+            const generateButton = document.getElementById('generateButton');
+            if (showButton) {
+                generateButton.style.display = 'block';
+            } else {
+                generateButton.style.display = 'none';
+            }
+        }
+
+        function redirectToNextPage() {
+            window.location.href = 'template.html';
+        }
+        window.onload = function () {
+            const userDataString = localStorage.getItem('userData');
+            if (userDataString) {
+                const userData = JSON.parse(userDataString);
+                document.getElementById('declarationDate').value = userData.date;
+                document.getElementById('declarationPlace').value = userData.place;
+                document.getElementById('declarationUserName').value = userData.name;
+                if (userData.declaration === 'Yes') {
+                    document.getElementById('yesRadio').checked = true;
+                } else {
+                    document.getElementById('noRadio').checked = true;
+                }
+                toggleButtonVisibility(userData.declaration === 'Yes'); // Call toggleButtonVisibility here
+            }
+        }
+
+        
+    </script>
+</body>
+
+</html>

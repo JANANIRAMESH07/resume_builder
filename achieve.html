@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        #box6 {
+            margin-left: 4%;
+        }
+
+        .box {
+            height: 150px;
+        }
+
+        #achievementsTextboxContainer {
+            margin-top: 10px;
+        }
+
+        .box {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 150px;
+            border-radius: 4px;
+        }
+
+        .next {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-left: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .next:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="personalinfo.html">Personal Information</a>
+        <a href="professioninfo.html">Profession Summary</a>
+        <a href="work.html">Work Experience</a>
+        <a href="edu.html">Education</a>
+        <a href="interest.html">Area of Interest</a>
+        <a href="skill.html">Skills</a>
+        <a href="extra.html">Co-curricular Activities</a>
+       
+        <a href="pro.html">Projects</a>
+        <a href="lan.html">Languages Known</a>
+        <a class="active" href="achieve.html">Achievements</a>
+        <a href="declare.html">Declaration</a>
+    </div>
+    <div class="content">
+        <form class="section">
+            <div id="box9">
+                <h2>Achievements:</h2>
+                <p>Do you like to add your achievements to your resume?</p>
+
+                <br>
+                <label>
+                    <input type="radio" name="achievementsOption" value="achievementsOption2">
+                    Yes
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="achievementsOption" value="achievementsOption3">
+                    No
+                </label>
+                <br>
+
+                <div id="achievementsTextboxContainer" style="display: none;">
+                    <br><br>
+                    <label>List your achievements:</label><br><br>
+                    <textarea class="box" name="achievements"
+                        placeholder="Include details about your achievements, awards, and recognition"></textarea><br>
+                </div>
+                <br>
+                <br>
+                <button class="next-btn" type="submit">Save</button>
+            </div>
+        </form>
+        <a href="template.html">
+            <button class="next">Preview</button>
+        </a>
+        <a href="declare.html">
+            <button class="next-b">Next<i class="fa-solid fa-arrow-right"></i></button>
+        </a>
+    </div>
+    <script>
+        const achievementsOption2RadioButton = document.querySelector('input[name="achievementsOption"][value="achievementsOption2"]');
+        const achievementsOption3RadioButton = document.querySelector('input[name="achievementsOption"][value="achievementsOption3"]');
+        const achievementsTextboxContainer = document.getElementById('achievementsTextboxContainer');
+        const achievementsTextarea = document.querySelector('textarea[name="achievements"]');
+
+        achievementsOption2RadioButton.addEventListener('change', function () {
+            if (this.checked) {
+                achievementsTextboxContainer.style.display = 'block';
+            } else {
+                achievementsTextboxContainer.style.display = 'none';
+            }
+        });
+
+        achievementsOption3RadioButton.addEventListener('change', function () {
+            if (this.checked) {
+                achievementsTextboxContainer.style.display = 'none';
+                achievementsTextarea.value = '';
+            }
+        });
+
+        const achievementsForm = document.querySelector('form');
+        achievementsForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const achievementsOption = document.querySelector('input[name="achievementsOption"]:checked').value;
+            const achievementsTextarea = document.querySelector('textarea[name="achievements"]').value;
+
+            // Check if the user selected "Yes" and entered achievements data
+            if (achievementsOption === 'achievementsOption2' && achievementsTextarea.trim() !== '') {
+                localStorage.setItem('achievementsData', JSON.stringify(achievementsTextarea.split('\n')));
+            } else {
+                // If the user selected "No" or didn't enter any data, remove achievementsData from localStorage
+                localStorage.removeItem('achievementsData');
+            }
+            
+            // Redirect to template.html after saving
+            
+        });
+
+        // Check if the radio button was previously selected and set the state accordingly
+        const savedOption = localStorage.getItem('achievementsOption');
+        if (savedOption === 'achievementsOption2') {
+            achievementsOption2RadioButton.checked = true;
+            achievementsTextboxContainer.style.display = 'block';
+            achievementsTextarea.value = localStorage.getItem('achievements');
+        } else if (savedOption === 'achievementsOption3') {
+            achievementsOption3RadioButton.checked = true;
+            achievementsTextboxContainer.style.display = 'none';
+            achievementsTextarea.value = '';
+        }
+
+        // Save the entered data when leaving the page
+        window.addEventListener('beforeunload', function () {
+            if (achievementsOption2RadioButton.checked) {
+                localStorage.setItem('achievementsOption', 'achievementsOption2');
+                localStorage.setItem('achievements', achievementsTextarea.value);
+            } else {
+                localStorage.setItem('achievementsOption', 'achievementsOption3');
+                localStorage.removeItem('achievements');
+            }
+        });
+    </script>
+</body>
+
+</html>

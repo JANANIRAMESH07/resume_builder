@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .content {
+            margin-left: 250px;
+            
+        }
+
+        h2 {
+            
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #box8 {
+            margin-left: 4%;
+        }
+
+        label {
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 16px;
+        }
+button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="personalinfo.html">Personal Information</a>
+        <a href="professioninfo.html">Profession Summary</a>
+        <a href="work.html">Work Experience</a>
+        <a href="edu.html">Education</a>
+        <a class="active" href="interest.html">Area of Interest</a>
+        <a href="skill.html">Skills</a>
+        <a href="extra.html">Co-curricular Activities</a>
+        <a href="pro.html">Projects</a>
+        <a href="lan.html">Languages Known</a>
+        <a href="achieve.html">Achievements</a>
+       
+        <a href="declare.html">Declaration</a>
+    </div>
+    <div class="content">
+        <form class="section">
+            <div id="box8">
+                <h2>Area of Interest:</h2>
+                <label for="numInterests">Enter the number of areas of interest:</label><br>
+                <input type="number" id="numInterests" min="1" placeholder="Enter a number"><br><br>
+                <div id="interestInputs"></div>
+            </div>
+        </form>
+        <br>
+        <button class="next-btn" onclick="saveInfo()">Save</button>
+        <a href="template.html">  
+          <button  class="next-bt">Preview</button>  
+        </a>
+        <a href="skill.html">  
+          <button  class="next-b">Next<i class="fa-solid fa-arrow-right"></i></button>  
+        </a>
+    </div>
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', loadSavedData); 
+
+    const numInterestsInput = document.getElementById('numInterests');
+    const interestInputsContainer = document.getElementById('interestInputs');
+
+    numInterestsInput.addEventListener('input', function () {
+        const numInterests = parseInt(this.value, 10);
+        createInterestInputs(numInterests);
+    });
+
+    function createInterestInputs(numInterests) {
+        interestInputsContainer.innerHTML = '';
+
+        for (let i = 0; i < numInterests; i++) {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = `Enter Interest ${i + 1}`;
+            input.id = `interest-${i + 1}`;
+            interestInputsContainer.appendChild(input);
+            interestInputsContainer.appendChild(document.createElement('br'));
+        }
+    }
+
+    function saveInfo() {
+        const numInterests = parseInt(numInterestsInput.value, 10);
+        localStorage.setItem('numInterests', numInterests); 
+
+        for (let i = 0; i < numInterests; i++) {
+            const interestValue = document.getElementById(`interest-${i + 1}`).value;
+            localStorage.setItem(`interest-${i + 1}`, interestValue);
+        }
+
+       
+    }
+
+    function loadSavedData() {
+        const savedNumInterests = parseInt(localStorage.getItem('numInterests'), 10);
+
+        if (!isNaN(savedNumInterests)) {
+            numInterestsInput.value = savedNumInterests; 
+            createInterestInputs(savedNumInterests);
+
+            for (let i = 0; i < savedNumInterests; i++) {
+                const savedInterest = localStorage.getItem(`interest-${i + 1}`);
+                document.getElementById(`interest-${i + 1}`).value = savedInterest || ''; 
+            }
+        }
+    }
+
+    function goToNextPage() {
+       
+    }
+</script>
+
+</html>

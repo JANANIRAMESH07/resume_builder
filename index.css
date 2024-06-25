@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo+Play:wght@700&family=Share+Tech+Mono&family=Vazirmatn:wght@200&display=swap');
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color:blanchedalmond;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: rgb(0, 0, 0);
+  padding: 20px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: #5ee6f8;
+  color: white;
+}
+#box1{
+  margin-left : 4%;
+}
+input{
+  padding-top: 1%;
+  margin-top: 1%;
+  width:60%;
+}
+
+
+.sidebar a:hover:not(.active) {
+  background-color: #c3f5f5;
+  color: white;
+}
+
+div.section {
+  margin-left:10%;
+
+}
+
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 10px;
+
+}
+.next-b {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-left: 85%;
+  transition: background-color 0.3s;
+}
+
+.next-b:hover {
+  background-color: #0056b3;
+}
+.next-btn1:hover {
+  background-color: #0056b3;
+}
+.next-btn {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
+float: left;
+  transition: background-color 0.3s;
+}
+.next-btn:hover {
+  background-color: #0056b3;
+}
+.next-btn1 {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
+float: left;
+margin-left: 2%;
+  transition: background-color 0.3s;
+}
+.next-bt:hover {
+  background-color: #0056b3;
+}
+.next-bt {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
+  margin-left: 40%;
+  transition: background-color 0.3s;
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        #box6 {
+            margin-left: 4%;
+        }
+
+        .box {
+            height: 150px;
+        }
+
+        #inputContainer,
+        #inputContainer1 {
+            margin-top: 10px;
+        }
+
+        .box {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 150px;
+            border-radius: 4px;
+        }
+        .next {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 20px;
+    margin-left: 55%;
+      transition: background-color 0.3s;
+    }
+
+ 
+
+    .next:hover {
+      background-color: #0056b3;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="personalinfo.html">Personal Information</a>
+        <a href="professioninfo.html">Profession Summary</a>
+        <a href="work.html">Work Experience</a>
+        <a href="edu.html">Education</a>
+        <a href="interest.html">Area of Interest</a>
+        <a class="active" href="skill.html">Skills</a>
+        <a href="extra.html">Co-curricular Activities</a>
+        <a href="pro.html">Projects</a>
+        <a href="lan.html">Languages Known</a>
+        <a href="achieve.html">Achievements</a>
+      
+        <a href="declare.html">Declaration</a>
+    </div>
+    <div class="content">
+        <form class="section">
+            <div id="box6">
+                <h2>Skills:</h2>
+               
+                <label>Number of Skills:</label>
+                <input type="number" id="numberOfInputs1" min="0">
+                <br><br>
+                <div id="inputContainer1"></div>
+
+
+                <button type="submit" class="next-btn" >Save</button>
+
+            </div>
+        </form>
+        <a href="template.html">  
+            <button  class="next">Preview</button>  
+          </a>
+        <a href="extra.html">  
+            <button  class="next-b">Next<i class="fa-solid fa-arrow-right"></i></button>  
+          </a>
+    </div>
+    <script>
+
+        const inputContainer1 = document.getElementById('inputContainer1');
+
+        document.getElementById('numberOfInputs1').addEventListener('input', createInputBoxes1);
+
+     
+
+        function createInputBoxes1() {
+            const numberOfInputs1 = parseInt(document.getElementById('numberOfInputs1').value);
+
+            inputContainer1.innerHTML = '';
+
+            for (let i = 0; i < numberOfInputs1; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = `Skill ${i + 1}`;
+                input.addEventListener('input', storeInputData);
+                inputContainer1.appendChild(input);
+            }
+        }
+        function storeInputData() {
+ 
+    const hardSkills = getInputValues(inputContainer1);
+   
+
+
+    localStorage.setItem('hardSkills', JSON.stringify(hardSkills));
+ 
+    localStorage.setItem('numHardSkills', hardSkills.length);
+   
+}
+function clearSkillsData() {
+   
+    localStorage.removeItem('hardSkills');
+ 
+    localStorage.removeItem('numHardSkills');
+
+    inputContainer1.innerHTML = '';
+   
+    document.getElementById('numberOfInputs1').value = '';
+}
+
+
+       
+        function getInputValues(container) {
+            const inputs = container.querySelectorAll('input');
+            const values = [];
+            inputs.forEach(input => values.push(input.value));
+            return values;
+        }
+
+       
+        const savedHardSkills = localStorage.getItem('hardSkills');
+
+     
+
+        if (savedHardSkills) {
+            const hardSkills = JSON.parse(savedHardSkills);
+            document.getElementById('numberOfInputs1').value = hardSkills.length;
+            createInputBoxes1();
+            const hardSkillInputs = inputContainer1.querySelectorAll('input');
+            hardSkills.forEach((skill, index) => {
+                hardSkillInputs[index].value = skill;
+            });
+        }
+    </script>
+</body>
+
+</html>

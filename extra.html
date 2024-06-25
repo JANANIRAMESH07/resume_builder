@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        #box6 {
+            margin-left: 4%;
+        }
+
+        .box {
+            height: 150px;
+        }
+
+        #extracurricularTextboxContainer {
+            margin-top: 10px;
+        }
+
+        .box {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 150px;
+            border-radius: 4px;
+        }
+        .next {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 20px;
+    margin-left: 50%;
+      transition: background-color 0.3s;
+    }
+
+ 
+
+    .next:hover {
+      background-color: #0056b3;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="personalinfo.html">Personal Information</a>
+        <a href="professioninfo.html">Profession Summary</a>
+        <a href="work.html">Work Experience</a>
+        <a href="edu.html">Education</a>
+        <a href="interest.html">Area of Interest</a>
+        <a href="skill.html">Skills</a>
+        <a class="active" href="extra.html">Co-curricular Activities</a>
+        <a href="pro.html">Projects</a>
+        <a href="lan.html">Languages Known</a>
+        <a href="achieve.html">Achievements</a>
+       
+        <a href="declare.html">Declaration</a>
+    </div>
+    <div class="content">
+        <form class="section">
+            <div id="box6">
+                <h2>Co-curricular Activities:</h2>
+                <p>Would you like to add information about Co-curricular activities (Volunteer Works)?</p>
+               
+                <br>
+                <label>
+                    <input type="radio" name="extracurricularOption" value="extracurricularOption2">
+                    Yes
+                </label>
+                <br>
+                <label>
+                    <input type="radio" name="extracurricularOption" value="extracurricularOption3">
+                    No
+                </label>
+                <br>
+
+                <div id="extracurricularTextboxContainer" style="display: none;">
+                    <br><br>
+                    <label>List your volunteering activities:</label><br><br>
+                    <textarea class="box" name="extracurricularActivities"
+                        placeholder="Include Organization Name, Roles and Responsibility, Dates of involvement "></textarea><br>
+                </div>
+                <br>
+                <br>
+                <button class="next-btn" type="submit" >Save</button>
+            </div>
+        </form>
+        <a href="template.html">  
+            <button  class="next">Preview</button>  
+          </a>
+        <a href="pro.html">  
+            <button  class="next-b">Next<i class="fa-solid fa-arrow-right"></i></button>  
+          </a>
+    </div>
+    <script>
+        const extracurricularOption2RadioButton = document.querySelector('input[name="extracurricularOption"][value="extracurricularOption2"]');
+        const extracurricularOption3RadioButton = document.querySelector('input[name="extracurricularOption"][value="extracurricularOption3"]');
+        const extracurricularTextboxContainer = document.getElementById('extracurricularTextboxContainer');
+        const extracurricularActivitiesTextarea = document.querySelector('textarea[name="extracurricularActivities"]');
+
+        extracurricularOption2RadioButton.addEventListener('change', function () {
+            if (this.checked) {
+                extracurricularTextboxContainer.style.display = 'block';
+            } else {
+                extracurricularTextboxContainer.style.display = 'none';
+            }
+        });
+
+        extracurricularOption3RadioButton.addEventListener('change', function () {
+            if (this.checked) {
+                extracurricularTextboxContainer.style.display = 'none';
+                extracurricularActivitiesTextarea.value = ''; 
+            }
+        });
+
+        const savedOption = localStorage.getItem('extracurricularOption');
+        if (savedOption === 'extracurricularOption2') {
+            extracurricularOption2RadioButton.checked = true;
+            extracurricularTextboxContainer.style.display = 'block';
+            extracurricularActivitiesTextarea.value = localStorage.getItem('extracurricularActivities');
+        } else if (savedOption === 'extracurricularOption3') {
+            extracurricularOption3RadioButton.checked = true;
+            extracurricularTextboxContainer.style.display = 'none';
+            extracurricularActivitiesTextarea.value = ''; 
+        }
+
+        window.addEventListener('beforeunload', function () {
+            if (extracurricularOption2RadioButton.checked) {
+                localStorage.setItem('extracurricularOption', 'extracurricularOption2');
+                localStorage.setItem('extracurricularActivities', extracurricularActivitiesTextarea.value);
+            } else {
+                localStorage.setItem('extracurricularOption', 'extracurricularOption3');
+                localStorage.removeItem('extracurricularActivities');
+            }
+        });
+    </script>
+</body>
+
+</html>

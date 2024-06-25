@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <style>
+    input{
+      padding-top: 1%;
+      margin-top: 3%;
+      border-radius: 8px;
+                
+    }
+    body {
+            font-family: Arial, sans-serif;
+          
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        h2 {
+      text-align: center;
+    }
+
+    .upload-btn {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    .upload-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .input-file {
+      display: none;
+    }
+
+    .input {
+      margin-top: 10px;
+      font-size: 18px;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      transition: border-color 0.3s;
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: #007BFF;
+    }
+
+    .next-btn {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 20px;
+      float: left;
+      transition: background-color 0.3s;
+    }
+
+ 
+
+    .next-btn:hover {
+      background-color: #0056b3;
+    }
+   
+
+    label {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    #icon{
+      height: 60px;
+      width: 20px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+    <a class="active" href="#box1">Personal Information</a>
+    <a href="professioninfo.html">Profession Summary</a>
+    <a href="work.html">Work Experience</a>
+    <a href="edu.html">Education</a>
+    <a href="interest.html">Area of Interest</a>
+    <a href="skill.html">Skills</a>
+    <a href="extra.html">Co-curricular Activities</a>
+    <a href="pro.html">Projects</a>
+    <a href="lan.html">Languages known</a>
+    <a href="achieve.html">Achievements</a>
+  
+    <a href="declare.html">Declaration</a>
+  </div>
+  <div class="content">
+    <form class="section">
+      <div id="box1">
+        <h2>Personal Information:</h2>
+        <label for="photo" class="upload-btn">Upload Photo</label>
+        <input type="file" name="photo" id="photo" class="input-file"><br>
+        <img id="preview" src="#" alt="Preview" style="max-width: 150px; display: none;"><br><br><br>
+
+        <label class="input" for="firstname">Enter your firstname:</label><br>
+        <input  type="text" name="firstname" placeholder="enter firstname"><br><br><br>
+        <label class="input" for="lastname">Enter your lastname:</label><br>
+        <input type="text" name="lastname" placeholder="enter lastname"><br><br><br>
+        <label class="input" for="email">Enter your email:</label><br>
+        <input type="text" name="email" placeholder="enter email"><br><br><br>
+        <label class="input" for="address">Enter your address:</label><br>
+        <input type="text" name="address" placeholder="enter address"><br><br><br>
+        <label class="input" for="phoneNumber">Enter your phone number:</label><br>
+        <input type="text" name="phonenumber" placeholder="enter phonenumber"><br><br><br>
+        <label class="input" for="linkedin">Enter your linkedin link:</label><br>
+        <input type="text" name="linkedin" placeholder="enter your linkedin profile link"><br><br><br>
+        <label class="input" for="github">Enter your github link:</label><br>
+        <input type="text" name="github" placeholder="enter your github profile link"><br><br><br>
+        <button class="next-btn">Save</button>
+        
+    
+      </div>
+
+
+    </form>
+    <a href="template.html">  
+      <button  class="next-bt">Preview</button>  
+    </a>
+    <a href="professioninfo.html">  
+      <button  class="next-b" >Next</button> 
+    </a>
+
+  </div>
+  <script>
+   
+    document.addEventListener("DOMContentLoaded", function () {
+      const personalInfoForm = document.querySelector(".section");
+      const nextBtn = personalInfoForm.querySelector(".next-btn");
+      const fileInput = personalInfoForm.querySelector("#photo");
+      const previewImage = personalInfoForm.querySelector("#preview");
+
+      fileInput.addEventListener("change", function () {
+        const file = fileInput.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            previewImage.src = e.target.result;
+            previewImage.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        } else {
+          previewImage.src = "#";
+          previewImage.style.display = "none";
+        }
+      });
+
+      nextBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        const personalInfoData = {
+          firstname: personalInfoForm.firstname.value,
+          lastname: personalInfoForm.lastname.value,
+          email: personalInfoForm.email.value,
+          address: personalInfoForm.address.value,
+          phonenumber: personalInfoForm.phonenumber.value,
+          linkedin: personalInfoForm.linkedin.value,
+          github: personalInfoForm.github.value,
+          photo: previewImage.src 
+        };
+        localStorage.setItem("personalInfo", JSON.stringify(personalInfoData));
+
+
+      });
+
+
+      const storedPersonalInfo = JSON.parse(localStorage.getItem("personalInfo"));
+      if (storedPersonalInfo) {
+        personalInfoForm.firstname.value = storedPersonalInfo.firstname;
+        personalInfoForm.lastname.value = storedPersonalInfo.lastname;
+        personalInfoForm.email.value = storedPersonalInfo.email;
+        personalInfoForm.address.value = storedPersonalInfo.address;
+        personalInfoForm.phonenumber.value = storedPersonalInfo.phonenumber;
+        personalInfoForm.linkedin.value = storedPersonalInfo.linkedin;
+        personalInfoForm.github.value = storedPersonalInfo.github;
+
+
+        if (storedPersonalInfo.photo) {
+          previewImage.src = storedPersonalInfo.photo;
+          previewImage.style.display = "block";
+        }
+      }
+    });
+  </script>
+ 
+
+</body>
+</html>

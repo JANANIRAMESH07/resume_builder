@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="index.css">
+    <style>
+        #sum{
+            height: 150px;
+        }
+        #box2{
+      margin-left : 4%;
+    }
+    body {
+      font-family: Arial, sans-serif;
+   
+      margin: 0;
+      padding: 0;
+    }
+
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .input {
+      margin-top: 10px;
+      font-size: 18px;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: border-color 0.3s;
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: #007BFF;
+    }
+
+    /* Style the textarea for the summary */
+    .summary {
+      margin-top: 10px;
+      font-size: 18px;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: border-color 0.3s;
+      resize: vertical; /* Allow vertical resizing */
+      min-height: 150px; /* Set a minimum height for the textarea */
+    }
+
+    .summary:focus {
+      outline: none;
+      border-color: #007BFF;
+    }
+
+    /* Style the submit button */
+    #submitButton {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    #submitButton:hover {
+      background-color: #0056b3;
+    }
+    .next {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+      font-size: 18px;
+      margin-left: 50%;
+            transition: background-color 0.3s;
+    }
+
+ 
+
+    .next:hover {
+      background-color: #0056b3;
+    }
+    </style>
+
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="personalinfo.html">Personal Information</a>
+        <a class="active" href="professioninfo.html">Profession Summary</a>
+        <a href="work.html">Work Experience</a>
+        <a href="edu.html">Education</a>
+        <a href="interest.html">Area of Interest</a>
+        <a href="skill.html">Skills</a>
+        <a href="extra.html">Co-curricular Activities</a>
+        <a href="pro.html">Projects</a>
+        <a href="lan.html"> Languages Known</a>
+        <a href="achieve.html">Achievements</a>
+     
+        <a href="declare.html">Declaration</a>
+    </div>
+    <div class="content">
+        <form class="section" id="professioninfo">
+            <div id="box2">
+                <h2>Profession Summary:</h2><br>
+                <label class="input" for="profession">Enter your Profession: <br> </label><br>
+                <input type="text" name="profession" placeholder="profession" required br
+                ><br><br>
+                <label class="input"  for="summary"><br> Write a short summary about you: <br> </label><br>
+                <textarea type="text" id="sum" class="summary" name="summary" placeholder="write a short summary about you" required></textarea><br><br>
+                <button class="next-btn" type="button" id="submitButton">Save</button>
+            </div>
+        </form>
+        <a href="template.html">  
+          <button  class="next">Preview</button>  
+        </a>
+        <a href="work.html">  
+          <button  class="next-b">Next<i class="fa-solid fa-arrow-right"></i></button>  
+        </a>
+       
+    </div>
+   
+    
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const professionInfoForm = document.getElementById("professioninfo");
+  const submitButton = document.getElementById("submitButton");
+
+  submitButton.addEventListener("click", function () {
+    const professionSummaryData = {
+      profession: professionInfoForm.profession.value,
+      summary: professionInfoForm.summary.value
+    };
+    localStorage.setItem("professionSummary", JSON.stringify(professionSummaryData));
+
+   
+  });
+
+  const storedProfessionSummary = JSON.parse(localStorage.getItem("professionSummary"));
+  if (storedProfessionSummary) {
+    professionInfoForm.profession.value = storedProfessionSummary.profession;
+    professionInfoForm.summary.value = storedProfessionSummary.summary;
+  }
+});
+
+</script>
+</body>
+
+</html>
